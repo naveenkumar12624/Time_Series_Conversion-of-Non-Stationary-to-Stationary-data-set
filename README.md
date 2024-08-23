@@ -3,8 +3,10 @@
 ### Date:
 
 # Ex.No: 1B CONVERSION OF NON STATIONARY TO STATIONARY DATA
+
 ### AIM:
 To perform regular differncing,seasonal adjustment and log transformatio on international airline passenger data
+
 ### ALGORITHM:
 1. Import the required packages like pandas and numpy
 2. Read the data using the pandas
@@ -12,10 +14,8 @@ To perform regular differncing,seasonal adjustment and log transformatio on inte
 4. Plot the data according to need, before and after regular differncing,seasonal adjustment,log transformation.
 5. Display the overall results.
 
-
 ### PROGRAM:
-
-```python
+```py
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -41,7 +41,6 @@ plt.ylabel('No. of passengers in thousands.')
 plt.plot(x,y)
 
 ```
-
 #### SEASONAL ADJUSTMENT:
 
 ```python
@@ -55,7 +54,6 @@ plt.ylabel('No. of passengers in thousands.')
 plt.plot(x,y)
 
 ```
-
 #### LOG TRANSFORMATION:
 
 ```python
@@ -68,7 +66,6 @@ plt.xlabel('Month')
 plt.ylabel('No. of passengers in thousands.')
 plt.plot(x,y)
 ```
-
 ### OUTPUT:
 
 #### REGULAR DIFFERENCING:
