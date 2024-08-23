@@ -1,5 +1,5 @@
-### Developed by: Syed Abdul Wasih H
-### Register Number: 212221240057
+### Developed by: Naveen Kumar S
+### Register Number: 212221240033
 ### Date:
 
 # Ex.No: 1B CONVERSION OF NON STATIONARY TO STATIONARY DATA
