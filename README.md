@@ -5,7 +5,7 @@
 # Ex.No: 1B CONVERSION OF NON STATIONARY TO STATIONARY DATA
 
 ### AIM:
-To perform regular differncing,seasonal adjustment and log transformatio on international airline passenger data
+To perform regular differncing,seasonal adjustment and log transformation on Stock Price data of NVIDIA.
 
 ### ALGORITHM:
 1. Import the required packages like pandas and numpy
@@ -16,72 +16,84 @@ To perform regular differncing,seasonal adjustment and log transformatio on inte
 
 ### PROGRAM:
 ```py
+# Import required libraries
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-data=pd.read_csv('international-airline-passengers.csv')
-x=data.iloc[:,0]
-y=data.iloc[:,1]
-plt.xlabel('Month')
-plt.ylabel('No. of passengers in thousands.')
-plt.plot(x,y)
+from statsmodels.tsa.seasonal import seasonal_decompose
+from statsmodels.tsa.stattools import adfuller
 
+# Load the dataset
+nvidia_df = pd.read_csv('C:/Users/lenovo/Downloads/archive (2)/NVIDIA/NvidiaStockPrice.csv')
+
+# Convert the 'Date' column to datetime format
+nvidia_df['Date'] = pd.to_datetime(nvidia_df['Date'])
+
+# Set the 'Date' column as index
+nvidia_df.set_index('Date', inplace=True)
+
+# Select 'Adj Close' for analysis
+nvidia_series = nvidia_df['Adj Close'].dropna()
 ```
 
 #### REGULAR DIFFERENCING:
 
 ```python
-data1=data
-data1['diff']=data1.iloc[:,1].diff(periods=1)
-data1=data1.dropna()
-x=data1['Month']
-y=data1['diff']
-plt.xlabel('Month')
-plt.ylabel('No. of passengers in thousands.')
-plt.plot(x,y)
+# Differencing to remove trend (regular differencing)
+nvidia_diff = nvidia_series.diff().dropna()
 
+# Plot the differenced series
+plt.figure(figsize=(10, 6))
+plt.plot(nvidia_diff, label='Differenced Series', color='green')
+plt.title('NVIDIA Stock Price (Differenced)')
+plt.xlabel('Date')
+plt.ylabel('Differenced Adj Close Price')
+plt.legend()
+plt.grid(True)
+plt.show()
 ```
 #### SEASONAL ADJUSTMENT:
 
 ```python
-data2=data
-data2['SeasonalAdjustment'] = data2.iloc[:,1] - data2.iloc[:,1].shift(12)
-data2['SeasonalAdjustment'].dropna()
-x=data2['Month']
-y=data2["SeasonalAdjustment"]
-plt.xlabel('Month')
-plt.ylabel('No. of passengers in thousands.')
-plt.plot(x,y)
+# Seasonal decomposition (additive model)
+decomposition = seasonal_decompose(nvidia_log, model='additive', period=252)  # Assuming 252 trading days per year
 
+# Plot the decomposed components
+decomposition.plot()
+plt.suptitle('Seasonal Decomposition of NVIDIA Log Transformed Series', fontsize=16)
+plt.show()
 ```
 #### LOG TRANSFORMATION:
 
 ```python
-data3=data
-data3['log']=np.log(data3['diff']).dropna()
-data3=data3.dropna()
-x=data3['Month']
-y=data3['log']
-plt.xlabel('Month')
-plt.ylabel('No. of passengers in thousands.')
-plt.plot(x,y)
+# Perform Log Transformation to stabilize variance
+nvidia_log = np.log(nvidia_series)
+
+# Plot the log-transformed series
+plt.figure(figsize=(10, 6))
+plt.plot(nvidia_log, label='Log Transformed Series', color='orange')
+plt.title('NVIDIA Stock Price (Log Transformed)')
+plt.xlabel('Date')
+plt.ylabel('Log(Adj Close Price)')
+plt.legend()
+plt.grid(True)
+plt.show()
 ```
 ### OUTPUT:
 
-#### REGULAR DIFFERENCING:
+#### ORIGINAL PLOT:
+![image](https://github.com/user-attachments/assets/2a437ade-bc24-43ff-b72a-4523a89b0e47)
 
-![tsa1](https://github.com/anto-richard/TSA_EXP1B/assets/93427534/7d84d964-afaf-4afa-b575-8c2dcd6d27d1)
+#### REGULAR DIFFERENCING:
+![image](https://github.com/user-attachments/assets/bae01fb3-2955-40ab-b297-330bc78f6d3b)
 
 #### SEASONAL ADJUSTMENT:
 
-![tsa2](https://github.com/anto-richard/TSA_EXP1B/assets/93427534/86478229-d90e-4251-bf2e-82c9a222b3a0)
+![image](https://github.com/user-attachments/assets/5d84ab7f-0466-47dc-9e3d-88ae1daa3ea2)
 
 #### LOG TRANSFORMATION:
-
-![tsa3](https://github.com/anto-richard/TSA_EXP1B/assets/93427534/f3b1a060-d2a9-44ee-9b4f-cb599ba5c546)
-![tsa4](https://github.com/anto-richard/TSA_EXP1B/assets/93427534/b40b39fe-5a63-48ae-bdf8-f68a7bf2f104)
+![image](https://github.com/user-attachments/assets/c550291e-e013-450d-baba-93b94125e146)
 
 
 ### RESULT:
-Thus we have created the python code for the conversion of non stationary to stationary data on international airline passenger
-data.
+Thus we have created the python code for the conversion of non stationary to stationary data on Stock Price data of NVIDIA.
